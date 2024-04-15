@@ -1,0 +1,44 @@
+*Basic Inverter Measurements
+.include MOSIS_TSMC_025um.spice
+
+
+.option scale=1u
+
+M1000 out in vdd vdd CMOSP w=17 l=2
++  ad=22 pd=20 as=19 ps=18
+M1001 out in 0 0 CMOSN w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+C0 in 0 3.05fF
+
+vvdd vdd 0 2.5V DC 
+vin in 0 DC 
+
+.dc vin 0 2.5V 0.1V 
+
+.control
+    
+    run
+    plot v(out) v(in) title "Inverter Vout/Vin (modified Wp)"
+    let d_out = deriv(out)
+    * plot d_out
+    meas dc VIL
+    + find in when d_out=-1 cross=1
+    meas dc VOH
+    + find out when d_out=-1 cross=1
+
+    meas dc VIH
+    + find in when d_out=-1 cross=2
+    meas dc VOL
+    + find out when d_out=-1 cross=2
+
+    meas dc VM
+    + find in when out=in cross=1
+
+    let highMargin = 2.5 - VIH
+    let lowMargin = VIL
+    print highMargin
+    print lowMargin
+.endc
+
+
+.end

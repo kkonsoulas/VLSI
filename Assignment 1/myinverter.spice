@@ -1,0 +1,9 @@
+* SPICE3 file created from myinverter.ext - technology: scmos
+
+.option scale=1u
+
+M1000 out in vdd vdd CMOSP w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+M1001 out in gnd gnd CMOSN w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+C0 in 0 3.05fF

@@ -1,0 +1,29 @@
+*
+.include MOSIS_TSMC_025um.spice
+
+
+.option scale=1u
+
+MPMOS1 out1 in 0 vdd CMOSP w=3 l=2
+MPMOS2 out2 in out1 vdd CMOSP w=3 l=2
+Cout out2 0 0.1pF
+
+vvdd vdd 0 2.5V DC
+vsg vdd in 2.5 DC
+.ic V(out2) = 2.5V
+
+.tran 100ns 1ms
+
+.control
+    run
+    meas tran volout1 
+    + find v(out1) at=1ms
+    meas tran volout2 
+    + find v(out2) at=1ms
+    plot v(out1) v(out2) title "Voltage drop for two PMOS"
+.endc
+
+
+
+
+.end

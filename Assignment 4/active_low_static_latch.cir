@@ -1,0 +1,57 @@
+*Static Latch Implementation
+.include MOSIS_TSMC_025um.spice
+.option scale=1u
+
+*****   Sub-Circuits    *****
+.subckt INV VDD VSS IN OUT width=1
+M1 OUT IN VDD VDD CMOSP W={9*width} L=2
+M2 OUT IN VSS VSS CMOSN W={3*width} L=2
+.ends
+
+.subckt TRANSMISSION_GATE VDD VSS IN PGATE NGATE OUT width=1
+M1 IN PGATE OUT VDD CMOSP W={9*width} L=2
+M2 IN NGATE OUT VSS CMOSN W={3*width} L=2
+.ends
+*******************
+
+*****   Voltages    *****
+VDD vdd 0 DC 2.5V
+VCLK clk 0 DC PULSE(0V 2.5V 0 1n 1n 40ns 80ns)
+VIN D 0 DC pwl
++0ns  0V
++9ns 0V
++10ns 2.5V
++25ns 2.5V
++26ns 0V
++59ns 0V
++60ns 2.5V
++94ns 2.5V
++95ns 0V
++114ns 0V
++115ns 2.5V
++139ns 2.5V
++140ns 0V
+
+*******************
+
+*****   Circuit *****
+X_INV_FOR_CLOCK vdd 0 clk nclk INV width=2
+
+X_INV_D vdd 0 D 2 INV width=2
+X_TRANS_GATE vdd 0 2 clk nclk 3 TRANSMISSION_GATE width=2
+
+X_INV_ABOVE vdd 0 3 Q INV width=2
+X_INV_BELOW vdd 0 Q 3 INV width=1
+*******************
+
+.ic V(3)=2.5V
+.ic V(Q)=0V
+
+.control
+TRAN 1ns 160ns
+run
+plot V(d) V(clk) V(Q) title "Active Low Static Latch Verification Graph"
+.endc
+
+
+.end

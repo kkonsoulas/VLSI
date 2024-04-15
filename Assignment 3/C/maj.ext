@@ -1,0 +1,50 @@
+timestamp 1670349978
+version 8.3
+tech scmos
+style lambda=1.0(scna20_orb)
+scale 1000 1 100
+resistclasses 26670 59550 23860 19690 27260 2000000 49 26 2505830
+node "a_20_n14#" 36 0 20 -14 ndiff 48 28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "a_n11_n14#" 164 1316 -11 -14 ndc 88 54 0 0 0 0 0 0 0 0 0 0 146 90 0 0 0 0
+node "a_20_18#" 397 0 20 18 pdiff 0 0 240 92 0 0 0 0 0 0 0 0 160 88 0 0 0 0
+node "out" 482 4747 12 -14 ndiff 48 28 220 92 0 0 0 0 0 0 0 0 333 186 0 0 0 0
+node "a_n11_18#" 1187 8836 -11 18 pdc 0 0 420 192 0 0 0 0 0 0 0 0 612 326 0 0 0 0
+node "a" 667 5658 7 4 pc 0 0 0 0 124 122 0 0 0 0 0 0 20 18 0 0 0 0
+node "c" 667 5658 -1 4 pc 0 0 0 0 124 122 0 0 0 0 0 0 20 18 0 0 0 0
+node "b" 668 5974 -10 4 pc 0 0 0 0 128 124 0 0 0 0 0 0 20 18 0 0 0 0
+node "b" 907 7086 26 -16 p 0 0 0 0 168 164 0 0 0 0 0 0 20 18 0 0 0 0
+node "c" 906 6294 15 4 pc 0 0 0 0 164 162 0 0 0 0 0 0 20 18 0 0 0 0
+node "gnd" 819 0 -11 -22 pw 88 54 176 96 0 0 0 0 0 0 0 0 272 144 0 0 0 0
+node "Vdd" 3149 0 -11 17 nw 192 56 120 52 0 0 0 0 0 0 0 0 288 104 0 0 1796 170
+cap "Vdd" "a_n11_18#" 4136
+cap "Vdd" "out" 188
+cap "b" "a_n11_n14#" 180
+cap "a_n11_18#" "c" 240
+cap "gnd" "b" 1670
+cap "gnd" "c" 1908
+cap "a_n11_18#" "b" 240
+cap "Vdd" "b" 320
+cap "Vdd" "c" 558
+cap "gnd" "c" 1908
+cap "gnd" "a_n11_n14#" 1974
+cap "gnd" "a" 1908
+cap "gnd" "b" 1908
+cap "Vdd" "c" 1194
+cap "out" "c" 420
+cap "gnd" "out" 1034
+cap "c" "a_n11_n14#" 180
+cap "Vdd" "a" 1194
+cap "Vdd" "b" 1194
+device mosfet nfet 26 -14 27 -13 2 8 "gnd" "b" 4 0 "a_20_n14#" 8 0 "gnd" 8 0
+device mosfet nfet 18 -14 19 -13 2 8 "gnd" "c" 4 0 "out" 8 0 "a_20_n14#" 8 0
+device mosfet nfet 10 -14 11 -13 2 8 "gnd" "a" 4 0 "a_n11_n14#" 8 0 "out" 8 0
+device mosfet nfet 2 -14 3 -13 2 8 "gnd" "c" 4 0 "gnd" 8 0 "a_n11_n14#" 8 0
+device mosfet nfet -6 -14 -5 -13 2 8 "gnd" "b" 4 0 "a_n11_n14#" 8 0 "gnd" 8 0
+device mosfet pfet 26 18 27 19 2 40 "Vdd" "b" 4 0 "a_20_18#" 40 0 "a_n11_18#" 40 0
+device mosfet pfet 18 18 19 19 2 40 "Vdd" "c" 4 0 "out" 40 0 "a_20_18#" 40 0
+device mosfet pfet 10 18 11 19 2 20 "Vdd" "a" 4 0 "a_n11_18#" 20 0 "out" 20 0
+device mosfet pfet 2 18 3 19 2 20 "Vdd" "c" 4 0 "Vdd" 20 0 "a_n11_18#" 20 0
+device mosfet pfet -6 18 -5 19 2 20 "Vdd" "b" 4 0 "a_n11_18#" 20 0 "Vdd" 20 0
+subcap "a_n11_18#" -5076
+subcap "b" -636
+subcap "c" -636

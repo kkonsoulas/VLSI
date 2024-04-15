@@ -1,0 +1,42 @@
+timestamp 1670351680
+version 8.3
+tech scmos
+style lambda=1.0(scna20_orb)
+scale 1000 1 100
+resistclasses 26670 59550 23860 19690 27260 2000000 49 26 2505830
+node "a_n4_n14#" 161 1504 -4 -14 ndiff 96 56 0 0 0 0 0 0 0 0 0 0 148 90 0 0 0 0
+node "b" 548 5658 15 4 pc 0 0 0 0 104 102 0 0 0 0 0 0 20 18 0 0 0 0
+node "out" 397 3760 12 18 pdiff 40 26 160 72 0 0 0 0 0 0 0 0 254 150 0 0 0 0
+node "a_4_18#" 298 0 4 18 pdiff 0 0 180 72 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "a_n4_18#" 298 0 -4 18 pdiff 0 0 180 72 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "d" 787 6294 7 4 pc 0 0 0 0 144 142 0 0 0 0 0 0 20 18 0 0 0 0
+node "c" 787 6294 -1 4 pc 0 0 0 0 144 142 0 0 0 0 0 0 20 18 0 0 0 0
+node "a" 787 6610 -10 4 pc 0 0 0 0 148 144 0 0 0 0 0 0 20 18 0 0 0 0
+node "gnd" 700 0 -11 -22 pw 88 54 144 80 0 0 0 0 0 0 0 0 240 128 0 0 0 0
+node "Vdd" 3638 6204 -11 17 nw 64 40 200 100 0 0 0 0 0 0 0 0 372 210 0 0 1116 134
+cap "c" "Vdd" 558
+cap "a_n4_n14#" "d" 180
+cap "Vdd" "d" 558
+cap "c" "gnd" 1908
+cap "Vdd" "b" 1194
+cap "gnd" "d" 1908
+cap "b" "out" 180
+cap "gnd" "b" 1908
+cap "a" "Vdd" 558
+cap "a_n4_n14#" "gnd" 1880
+cap "Vdd" "out" 188
+cap "a" "gnd" 1908
+cap "gnd" "out" 564
+cap "c" "a_n4_n14#" 180
+device mosfet nfet 18 -14 19 -13 2 8 "gnd" "b" 4 0 "a_n4_n14#" 8 0 "out" 8 0
+device mosfet nfet 10 -14 11 -13 2 8 "gnd" "d" 4 0 "gnd" 8 0 "a_n4_n14#" 8 0
+device mosfet nfet 2 -14 3 -13 2 8 "gnd" "c" 4 0 "a_n4_n14#" 8 0 "gnd" 8 0
+device mosfet nfet -6 -14 -5 -13 2 8 "gnd" "a" 4 0 "gnd" 8 0 "a_n4_n14#" 8 0
+device mosfet pfet 18 18 19 19 2 10 "Vdd" "b" 4 0 "out" 10 0 "Vdd" 10 0
+device mosfet pfet 10 18 11 19 2 30 "Vdd" "d" 4 0 "a_4_18#" 30 0 "out" 30 0
+device mosfet pfet 2 18 3 19 2 30 "Vdd" "c" 4 0 "a_n4_18#" 30 0 "a_4_18#" 30 0
+device mosfet pfet -6 18 -5 19 2 30 "Vdd" "a" 4 0 "Vdd" 30 0 "a_n4_18#" 30 0
+subcap "d" -636
+subcap "c" -636
+subcap "a" -636
+subcap "Vdd" -6204

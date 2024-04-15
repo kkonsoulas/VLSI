@@ -1,0 +1,32 @@
+* SPICE3 file created from maj.ext - technology: scmos
+
+.option scale=1u
+
+M1000 a_n11_18# b a_20_18# Vdd pfet w=40 l=2
++  ad=420 pd=192 as=240 ps=92
+M1001 gnd b a_n11_n14# gnd nfet w=8 l=2
++  ad=88 pd=54 as=88 ps=54
+M1002 Vdd b a_n11_18# Vdd pfet w=20 l=2
++  ad=120 pd=52 as=0 ps=0
+M1003 a_n11_18# c Vdd Vdd pfet w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1004 a_20_n14# c out gnd nfet w=8 l=2
++  ad=48 pd=28 as=48 ps=28
+M1005 out a a_n11_n14# gnd nfet w=8 l=2
++  ad=0 pd=0 as=0 ps=0
+M1006 out a a_n11_18# Vdd pfet w=20 l=2
++  ad=220 pd=92 as=0 ps=0
+M1007 a_n11_n14# c gnd gnd nfet w=8 l=2
++  ad=0 pd=0 as=0 ps=0
+M1008 gnd b a_20_n14# gnd nfet w=8 l=2
++  ad=0 pd=0 as=0 ps=0
+M1009 a_20_18# c out Vdd pfet w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 b gnd 3.58fF
+C1 Vdd a_n11_18# 4.14fF
+C2 gnd c 3.82fF
+C3 out 0 4.75fF
+C4 a_n11_18# 0 3.76fF
+C5 a 0 5.66fF
+C6 c 0 11.32fF
+C7 b 0 12.42fF

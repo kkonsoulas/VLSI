@@ -1,0 +1,47 @@
+*
+.include MOSIS_TSMC_025um.spice
+
+
+.option scale=1u
+
+MPMOS out in vdd vdd CMOSP w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+
+vvdd vdd 0 2.5V DC
+vsg vdd in 0V DC
+vsd vdd out 0V DC
+
+.dc vsd 0 2.5 0.25 vsg 0 2.5 0.25
+
+.control
+    *VT0 = 0.55
+    * |Vgs| - |VT0| <= saturation region <= |Vgs|
+    run
+    plot -i(vsd) title "Ids of PMOS for multiple Vgs values"
+    alter vsg = 0.8
+    DC vsd 0.25 0.8 0.01
+    let Reqabs = -(v(vdd) - v(out))/i(vsd)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring PMOS Instantaneous and Average Resistance in Saturation Region for VGS = 0.8"
+    alter vsg = 1.2
+    DC Vsd 0.65 1.2 0.01
+    let Reqabs = -(v(vdd) - v(out))/i(vsd)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring PMOS Instantaneous and Average Resistance in Saturation Region for VGS = 1.2"
+    alter vsg = 2
+    DC Vsd 1.45 2 0.01
+    let Reqabs = -(v(vdd) - v(out))/i(vsd)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring PMOS Instantaneous and Average Resistance in Saturation Region for VGS = 2"
+    alter vsg = 2.5
+    DC Vsd 1.95 2.5 0.01
+    let Reqabs = -(v(vdd) - v(out))/i(vsd)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring PMOS Instantaneous and Average Resistance in Saturation Region for VGS = 2.5"
+.endc
+
+.end

@@ -1,0 +1,53 @@
+*
+.include MOSIS_TSMC_025um.spice
+
+
+.option scale=1u
+
+
+MNMOS out in 0 0 CMOSN w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+* C0 in 0 3.05fF
+
+vgs in 0 2.5V  DC
+vds out 0 0 DC
+
+
+.dc vds 0 2.5 0.25 vgs 0 2.5V 0.25V 
+.plot dc v(out)
+
+.control
+    *VT0 = 0.42
+    * Vgs - VT0 <= saturation region <= Vgs
+    run
+    plot -i(vds) title "Ids of NMOS for multiple Vgs values"
+    alter vgs = 0.8
+    DC Vds 0.38 0.8 0.01
+    let Reqabs = -v(out)/i(vds)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring NMOS Instantaneous and Average Resistance in Saturation Region for VGS = 0.8"
+    alter vgs = 1.2
+    DC Vds 0.78 1.2 0.01
+    let Reqabs = -v(out)/i(vds)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring NMOS Instantaneous and Average Resistance in Saturation Region for VGS = 1.2"
+    alter vgs = 2
+    DC Vds 1.58 2 0.01
+    let Reqabs = -v(out)/i(vds)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring NMOS Instantaneous and Average Resistance in Saturation Region for VGS = 2"
+    alter vgs = 2.5
+    DC Vds 2.08 2.5 0.01
+    let Reqabs = -v(out)/i(vds)
+    let Reqavs = mean(Reqabs)
+    print Reqavs
+    plot Reqabs Reqavs title "Measuring NMOS Instantaneous and Average Resistance in Saturation Region for VGS = 2.5"
+.endc
+
+
+
+.end
+

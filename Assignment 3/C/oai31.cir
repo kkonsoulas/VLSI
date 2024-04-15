@@ -1,0 +1,104 @@
+* SPICE3 file created from oai31.ext - technology: scmos
+.include MOSIS_TSMC_025um.spice
+.option scale=1u
+
+M1000 a_n4_n14# a gnd gnd CMOSN w=8 l=2
++  ad=96 pd=56 as=88 ps=54
+M1001 a_n4_18# a Vdd Vdd CMOSP w=30 l=2
++  ad=180 pd=72 as=200 ps=100
+M1002 a_4_18# c a_n4_18# Vdd CMOSP w=30 l=2
++  ad=180 pd=72 as=0 ps=0
+M1003 out b a_n4_n14# gnd CMOSN w=8 l=2
++  ad=40 pd=26 as=0 ps=0
+M1004 a_n4_n14# d gnd gnd CMOSN w=8 l=2
++  ad=0 pd=0 as=0 ps=0
+M1005 out d a_4_18# Vdd CMOSP w=30 l=2
++  ad=160 pd=72 as=0 ps=0
+M1006 gnd c a_n4_n14# gnd CMOSN w=8 l=2
++  ad=0 pd=0 as=0 ps=0
+M1007 Vdd b out Vdd CMOSP w=10 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 b 0 5.66fF
+C1 out 0 3.76fF
+C2 d 0 5.66fF
+C3 c 0 5.66fF
+C4 a 0 5.97fF
+
+Vvdd Vdd 0 2.5V DC
+Vd d 0 0 PULSE(0V 2.5V 0 1ns 1ns 160ns 320ns)
+Va a 0 0 PULSE(0V 2.5V 0 1ns 1ns 80ns 160ns)
+Vb b 0 0 PULSE(0V 2.5V 0 1ns 1ns 40ns 80ns)
+Vc c 0 0 PULSE(0V 2.5V 0 1ns 1ns 20ns 40ns)
+
+
+.control
+tran 1ns 320ns
+run
+plot V(d) V(a) V(b) V(c) V(out) title "F_oai31 All States Plot"
+alter Vd=0V
+alter Va=0V
+alter Vb=0V
+alter Vc=0V
+
+op
+
+
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=0V
+alter Va=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc = 2.5
+op
+print V(d) V(a) V(b) V(c) V(out)
+
+alter Vd=2.5v
+
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=0V
+alter Va=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc = 2.5
+op
+print V(d) V(a) V(b) V(c) V(out)
+.endc
+
+.end

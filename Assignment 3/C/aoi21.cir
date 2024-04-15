@@ -1,0 +1,68 @@
+* SPICE3 file created from aoi21.ext - technology: scmos
+.include MOSIS_TSMC_025um.spice
+.option scale=1u
+
+M1000 a_n4_18# a out Vdd CMOSP w=20 l=2
++  ad=220 pd=102 as=100 ps=50
+M1001 Vdd b a_n4_18# Vdd CMOSP w=20 l=2
++  ad=120 pd=52 as=0 ps=0
+M1002 gnd c a_4_n14# gnd CMOSN w=8 l=2
++  ad=60 pd=44 as=48 ps=28
+M1003 a_n4_18# c Vdd Vdd CMOSP w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1004 a_4_n14# b out gnd CMOSN w=8 l=2
++  ad=0 pd=0 as=44 ps=28
+M1005 out a gnd gnd CMOSN w=4 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 a_n4_18# 0 3.48fF
+C1 out 0 3.95fF
+C2 c 0 5.66fF
+C3 b 0 5.66fF
+C4 a 0 5.66fF
+
+Vvdd Vdd 0 2.5V DC
+Va a 0 PULSE(0V 2.5V 0 1n 1n 40ns 80ns)
+Vb b 0 0 PULSE(0V 2.5V 0 1n 1n 20ns 40ns)
+Vc c 0 0 PULSE(0V 2.5V 0 1n 1n 10ns 20ns)
+
+
+
+.control
+tran 500ps 81ns
+run
+plot V(a) V(b) V(c) V(out) title "F_aoi21 All States Plot"
+alter Va=0V
+alter Vb=0V
+alter Vc=0V
+
+op
+print V(a) V(b) V(c) V(out)
+alter Vc=2.5V
+op
+print V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5V
+op
+print V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=0V
+alter Va=2.5V
+op
+print V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5v
+op
+print V(a) V(b) V(c) V(out)
+alter Vc = 2.5
+op
+print V(a) V(b) V(c) V(out)
+
+.endc
+
+.end

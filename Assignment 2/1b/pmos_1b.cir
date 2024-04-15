@@ -1,0 +1,29 @@
+*
+.include MOSIS_TSMC_025um.spice
+
+
+.option scale=1u
+
+MPMOS out in vdd vdd CMOSP w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+Cout out 0 0.1pF
+
+vvdd vdd 0 2.5V DC
+vsg vdd in 2.5V DC
+
+.ic V(out)=0V
+.tran 1ps 10ns
+
+
+
+.control
+    run
+    plot V(out) title "PMOS Charging Capacitor"
+    meas tran tlth
+    + trig at=0
+    + targ v(out) val=1.25 cross=1
+    let Req = (tlth / (0.69*0.1p))
+    print Req    
+.endc
+
+.end

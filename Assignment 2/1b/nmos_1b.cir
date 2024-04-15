@@ -1,0 +1,35 @@
+*
+.include MOSIS_TSMC_025um.spice
+
+
+.option scale=1u
+
+
+MNMOS out in 0 0 CMOSN w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+Cout out 0 0.1pF
+
+vgs in 0 2.5V  DC
+
+
+.ic V(out)=2.5V
+.tran 1ps 2ns
+    
+
+
+
+.control
+
+    run
+    meas tran thtl 
+    + trig at=0
+    + targ v(out) val=1.25 cross=1
+    plot V(out) title "NMOS Discharging Capacitor"
+    let Req = (thtl / (0.69*0.1p))
+    print Req
+.endc
+
+
+
+.end
+

@@ -1,0 +1,136 @@
+*Negative Edge Flip-Flop Implementation
+.include MOSIS_TSMC_025um.spice
+.option scale=1u
+
+*****   Sub-Circuits    *****
+.subckt INV VDD VSS IN OUT width=1
+M1 OUT IN VDD VDD CMOSP W={9*width} L=2
+M2 OUT IN VSS VSS CMOSN W={3*width} L=2
+.ends
+
+.subckt TRANSMISSION_GATE VDD VSS IN PGATE NGATE OUT width=1
+M1 IN PGATE OUT VDD CMOSP W={9*width} L=2
+M2 IN NGATE OUT VSS CMOSN W={3*width} L=2
+.ends
+
+.subckt LATCH VDD VSS IN CLK NCLK OUT width=1
+X_I1 VDD VSS IN 1 INV width=width
+X_T1 VDD VSS 1 NCLK CLK 2 TRANSMISSION_GATE width=width
+
+X_I3 VDD VSS 2 OUT INV width=width
+
+X_I2 VDD VSS OUT 3 INV width=width
+X_T2 VDD VSS 3 CLK NCLK 2 TRANSMISSION_GATE width=width
+.ends
+*******************
+
+*****   Circuit *****
+X_g1_1 vdd 0 clk nclk INV width=1
+X_g1_2 vdd 0 nclk clk1 INV width=1
+X_g2 vdd 0 clk1 nclk1 INV width=2
+X_g3 vdd 0 nclk1 clk2 INV width=2
+
+X_L1 vdd 0 D clk2 nclk1 QM LATCH width=1
+X_L2 vdd 0 QM nclk1 clk2 Q LATCH width=1
+**********
+
+*****   Voltages    *****
+VDD vdd 0 DC 2.5V
+VCLK clk 0 DC PULSE(0V 2.5V 0 0.2n 0.2n 40ns 80ns)
+
+*input for verification
+* VIN D 0 DC pwl
+* +0ns  0V
+* +9ns 0V
+* +10ns 2.5V
+* +25ns 2.5V
+* +26ns 0V
+* +59ns 0V
+* +60ns 2.5V
+* +94ns 2.5V
+* +95ns 0V
+* +114ns 0V
+* +115ns 2.5V
+* +139ns 2.5V
+* +140ns 0V
+
+
+* minimum hold and 0 setup input (0.1ns accuracy &  trf(D) = 200ps)
+* VIN D 0 DC pwl
+* +0ns  2.5V
+* +39.8ns 2.5V
+* +40ns 0V
+* +43.6ns 0V
+* +43.8ns 2.5v
+* +100ns 2.5V
+* +100.2ns 0V
+* +119.8ns 0V
+* +120ns 2.5V
+* +123.4ns 2.5V
+* +123.6ns 0V
+
+* minimum hold and 0 setup input (0.1ns accuracy &  trf(D) = 400ps)
+VIN D 0 DC pwl
++0ns  2.5V
++39.6ns 2.5V
++40ns 0V
++43.4ns 0V
++43.8ns 2.5v
++100ns 2.5V
++100.4ns 0V
++119.6ns 0V
++120ns 2.5V
++123.3ns 2.5V
++123.7ns 0V
+
+*********
+
+*****   Capacitance *****
+*Cq = Cg1
+* X_Cq vdd 0 q unconnected_node INV width=1
+*Cq = 2Cg1
+X_Cq vdd 0 q unconnected_node INV width=2 
+*********
+
+.control
+TRAN 1ns 160ns
+run
+
+
+* plot V(d) V(clk) V(Q) title "Negative Edge Flip-Flop Verification Graph"
+* plot V(d) V(clk2) V(Q) V(QM) v(clk) title "Negative Edge Flip-Flop Measurements Graph"
+plot V(d) V(clk2) V(Q) v(clk) title "Negative Edge Flip-Flop Measurements Graph"
+* plot V(d) V(Q) v(clk) title "Negative Edge Flip-Flop Measurements Graph"
+
+
+meas tran clk_Q_delay_falling
++ trig v(clk) val=1.25 fall=1 
++ targ v(q) val=1.25 fall=1
+
+meas tran clk_Q_delay_rising
++ trig v(clk) val=1.25 fall=2 
++ targ v(q) val=1.25 rise=1
+
+
+meas tran QM_falling
++ trig v(QM) val=0.25 rise=1
++ targ v(QM) val=2.25 rise=1
+
+meas tran QM_rising
++ trig v(QM) val=2.25 fall=1
++ targ v(QM) val=0.25 fall=1
+
+
+meas tran Q_falling
++ trig v(q) val=0.25 rise=1
++ targ v(q) val=2.25 rise=1
+
+meas tran Q_rising
++ trig v(q) val=2.25 fall=1
++ targ v(q) val=0.25 fall=1
+
+.endc
+
+
+
+.end

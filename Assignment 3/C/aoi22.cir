@@ -1,0 +1,108 @@
+* SPICE3 file created from aoi22.ext - technology: scmos
+.include MOSIS_TSMC_025um.spice
+.option scale=1u
+
+M1000 a_n4_n14# c out gnd CMOSN w=8 l=2
++  ad=48 pd=28 as=80 ps=52
+M1001 Vdd c a_n11_18# Vdd CMOSP w=20 l=2
++  ad=120 pd=52 as=320 ps=152
+M1002 a_n11_18# a Vdd Vdd CMOSP w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1003 out d a_12_n14# gnd CMOSN w=8 l=2
++  ad=0 pd=0 as=48 ps=28
+M1004 a_12_n14# b gnd gnd CMOSN w=8 l=2
++  ad=0 pd=0 as=48 ps=28
+M1005 out b a_n11_18# Vdd CMOSP w=20 l=2
++  ad=120 pd=52 as=0 ps=0
+M1006 gnd a a_n4_n14# gnd CMOSN w=8 l=2
++  ad=0 pd=0 as=0 ps=0
+M1007 a_n11_18# d out Vdd CMOSP w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 gnd out 2.44fF
+C1 a_n11_18# Vdd 4.32fF
+C2 out 0 7.29fF
+C3 a_n11_18# 0 3.76fF
+C4 d 0 5.66fF
+C5 b 0 5.66fF
+C6 a 0 5.66fF
+C7 c 0 5.97fF
+
+
+Vvdd Vdd 0 2.5V DC
+Vd d 0 0 PULSE(0V 2.5V 0 1ns 1ns 160ns 320ns)
+Va a 0 0 PULSE(0V 2.5V 0 1ns 1ns 80ns 160ns)
+Vb b 0 0 PULSE(0V 2.5V 0 1ns 1ns 40ns 80ns)
+Vc c 0 0 PULSE(0V 2.5V 0 1ns 1ns 20ns 40ns)
+
+
+.control
+tran 1ns 320ns
+run
+plot V(d) V(a) V(b) V(c) V(out) title "F_aoi22 All States Plot"
+alter Vd=0V
+alter Va=0V
+alter Vb=0V
+alter Vc=0V
+
+op
+
+
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=0V
+alter Va=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc = 2.5
+op
+print V(d) V(a) V(b) V(c) V(out)
+
+alter Vd=2.5v
+
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=0V
+alter Va=2.5V
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc=0v
+alter Vb=2.5v
+op
+print V(d) V(a) V(b) V(c) V(out)
+alter Vc = 2.5
+op
+print V(d) V(a) V(b) V(c) V(out)
+.endc
+
+.end

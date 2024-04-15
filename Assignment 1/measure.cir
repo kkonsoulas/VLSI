@@ -1,0 +1,44 @@
+*Basic Inverter Measurements
+.include 025_models.spice
+
+
+.option scale=1u
+
+M1000 out in vdd vdd CMOSP w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+M1001 out in 0 0 CMOSN w=3 l=2
++  ad=22 pd=20 as=19 ps=18
+C0 in 0 3.05fF
+
+vvdd vdd 0 2.5V DC 
+vin in 0 DC pwl
++0ns  0v
++2ns 0v
++2200ps  2.5v
++8ns  2.5v
++8200ps  0v
++12ns 0v
+
+.tran 10ps 15ns
+
+*high -> low
+.meas tran thtl 
++ trig v(in) val=1.25 rise=1 
++ targ v(out) val=1.25 fall=1
+
+*low -> high
+.meas tran tlth
++ trig v(in) val=1.25 fall=1 
++ targ v(out) val=1.25 rise=1
+
+*rise transition time
+.meas tran trise
++trig v(out) val=0.25 rise=1
++targ v(out) val=2.25 rise=1
+
+*fall transition time
+.meas tran tfall
++trig v(out) val=2.25 fall=1
++targ v(out) val=0.25 fall=1
+
+.end
